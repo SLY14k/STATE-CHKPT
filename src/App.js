@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+import React,{Component} from 'react'
+// import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
+class App extends Component{
+  constructor(props) {
+    super(props)
+  this.state = {
+    Person : { fullName:"Okonta Chukwuebuka", bio:"24 year old, web developer", imgSrc:"Me.jpg" , profession:"Bad MOFO"},
+    show : true,
+    count: 0
+  };
+  } 
+  render(){
+    const  count  = this.state.count
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      {
+        this.state.show?
+      <div>
+        <h1>{this.state.Person.fullName}</h1>
+        <h3>{this.state.Person.bio}</h3>
+        <h3>{this.state.Person.profession}</h3>
+        <div><img src={this.state.Person.imgSrc} alt={"me"} width={250} height={250}></img></div>
+        <h5>Time interval : {count}</h5>
+      </div>
+      :null
+      }
+      <button onClick={()=>this.setState({...this.state,show:!this.state.show})} id="myButton" >Hide/Show Data</button>
+    </div>)
+  }
+
+  componentDidMount() {
+    this.myInterval = setInterval (()=>{
+      this.setState(prevState => ({
+        count: prevState.count + 1
+    }))
+  }, 5000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.myInterval)
+  }
+
 }
+
 
 export default App;
